@@ -1,0 +1,71 @@
+<html>
+    <head>
+        <title>Reaction Timer</title>
+        <style type="text/css"></style>
+    </head>
+
+    <body>
+        <img id="stimulus" src="">
+        
+        <p class="bold">Your time: <span id="timeTaken"></span></p>
+        
+        <p class="bold">Pressed E: <span id="timeTaken2"></span></p>
+        <button class="RTbtn">RT</button>
+        
+        
+        <script type="text/javascript">
+            var ws = new WebSocket("ws://127.0.0.1:8787/")
+            var start = new Date().getTime();
+            var detect_key = false;
+            
+            
+            // main function
+            ws.onmessage = function (event) {
+                // get data from server
+                var stimulus_link = event.data
+                console.log(event.data)
+                
+                // display stimulus
+                document.getElementById('stimulus').src = stimulus_link;
+                start = new Date().getTime(); // refresh timer
+                
+                
+                //message.appendChild(content);
+                //messages.appendChild(message);
+            };
+            document.body.appendChild(messages);
+            
+            
+            //.page {display: none;}
+            
+ //start = new Date().getTime();
+            
+            function getRT() {
+                var end = new Date().getTime();
+                var timeTaken = (end - start) / 1000;
+                document.getElementById("timeTaken").innerHTML = timeTaken + "s";
+                //WebSocket.send(JSON.stringify({action: 'click', rt: timeTaken}));
+                return timeTaken
+            }
+
+            // Record key if detect_key == true
+            document.onkeydown = function(e){
+                e = e || window.event;
+                if (e.keyCode == 69){      // keycode for e   i: 73
+                    rt = String(getRT())
+                    document.getElementById("timeTaken2").innerHTML = rt + "s";
+                    
+                    // send RT data to server
+                    WebSocket.send('Hi server')
+                    //WebSocket.send(JSON.stringify({action: 'pressed e', rt: rt}));
+                 }
+            }
+            
+            var RTbtn = document.querySelector('.RTbtn');
+             RTbtn.onclick = function (event) {
+                websocket.send('Hi server, RT:' + str(getRT()));
+            }
+        </script>
+    </body>
+
+</html>

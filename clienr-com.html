@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>WebSocket demo</title>
+        
+    </head>
+    <body>
+        <p><span id='keye'>input e: </span></p> 
+       <p><span id='fserver'>From server: </span></p> 
+        
+        
+        <script>
+            var websocket = new WebSocket("ws://127.0.0.1:8765/");
+            var times = 0
+            var detect_key = true;
+            
+            /*
+            minus.onclick = function (event) {
+                websocket.send('Hi server');
+            }
+            plus.onclick = function (event) {
+                websocket.send('Hi server');
+            }
+            */
+            
+            document.onkeydown = function(e){
+                e = e || window.event;
+                if (e.keyCode == 69){      // keycode for e   i: 73
+                    if (detect_key) {
+                        times ++
+                        document.getElementById("keye").innerHTML = "pressed e" + times;
+
+                        // send RT data to server
+                        websocket.send('pressed e' + times)
+                        //WebSocket.send(JSON.stringify({action: 'pressed e', rt: rt}));
+                        //detect_key = false
+                    } 
+                }
+            }
+            
+            
+            websocket.onmessage = function (event) {
+                //data = JSON.parse(event.data);
+                document.getElementById("fserver").innerHTML = event.data;
+                //detect_key = true
+            };
+        </script>
+    </body>
+</html>

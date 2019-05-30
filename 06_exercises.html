@@ -1,0 +1,82 @@
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=Big5">
+    <script src="06_exercises_files/jquery-3.js"></script>
+
+    <script>
+        var order = new Array(1, 2, 3, 4);
+        var current = 0; //current trial
+		
+        //preload images
+        img = new Array();
+        var i;
+        for (i = 1; i < 4; i++) {
+            img[i] = new Image();
+            img[i].src = "06_exercises_files/" + i + ".jpg"
+        } 
+
+        /*
+        $(document).ready(function () {
+            ShowTrial(current);
+        });
+        */
+
+        function ShowTrial(t) {
+            $("#page" + order[t]).show();
+            var N = t + 1; //counting from 1
+            $(".progress").text('(' + N + '/' + order.length + ')');
+        }
+        
+        function NextTrial() {
+            current++;
+            $("#eyes").attr("src",img[current+1].src);
+            ShowTrial(current);
+            /*
+            $("#page" + order[current]).hide();
+            current++;
+            ShowTrial(current);
+            */
+        }
+
+
+
+    </script>
+
+    <!-- <style> .page {display: none;} </style> -->
+
+</head>
+
+<body cz-shortcut-listen="true">Please indicate the sex of this face:
+
+    <div class="page" id="page1" style="display: block;">
+        <img id="eyes" src="06_exercises_files/1.jpg"><br>
+        <input name="f1" value="M" type="radio"> M
+        <input name="f1" value="F" type="radio"> F <br>
+        <!-- <a href="javascript:NextTrial()">Next</a> -->
+        <button onclick="NextTrial()">Next</button>
+        <span class="progress">(1/4)</span>
+    </div>
+
+    <!-- <div class="page" id="page2">
+        <img src="06_exercises_files/2.jpg"><br>
+        <input name="f2" value="M" type="radio"> M
+        <input name="f2" value="F" type="radio"> F <br>
+        <a href="javascript:NextTrial()">Next</a>
+        <span class="progress">(1/4)</span>
+    </div>
+
+    <div class="page" id="page3">
+        <img src="06_exercises_files/3.jpg"><br>
+        <input name="f3" value="M" type="radio"> M
+        <input name="f3" value="F" type="radio"> F <br>
+        <a href="javascript:NextTrial()">Next</a>
+        <span class="progress">(1/4)</span>
+    </div>
+
+    <div class="page" id="page4">
+        <h3>All done! Thanks!</h3>
+    </div> -->
+</body>
+
+</html>
