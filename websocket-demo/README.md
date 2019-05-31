@@ -6,12 +6,11 @@
 pip install websockets
 ```
 
-## `websocket-demo`
+## 執行
 
 先在 Terminal 執行 `server.py`:
 
 ```bash
-cd websocket-demo
 python3 server.py
 ```
 
